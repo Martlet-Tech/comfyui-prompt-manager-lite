@@ -9,7 +9,6 @@
 import { app } from "../../scripts/app.js";
 
 const SNIPPETS_PREFIX = "/prompt-snippets";
-const LIST_MAX_HEIGHT = 320;
 
 function forwardWheelToCanvas(element) {
     element.addEventListener("wheel", (e) => {
@@ -70,6 +69,7 @@ function createSnippetsWidget(node) {
         display:flex; flex-direction:column; gap:6px;
         background:#171717; border-radius:6px; padding:7px;
         box-sizing:border-box; font-size:12px;
+        height:100%; min-height:396px;
     `;
     container.addEventListener("contextmenu", (e) => e.preventDefault());
     forwardWheelToCanvas(container);
@@ -103,7 +103,7 @@ function createSnippetsWidget(node) {
     list.setAttribute("aria-label", "片段列表");
     list.style.cssText = `
         display:flex; flex-direction:column; gap:5px;
-        max-height:${LIST_MAX_HEIGHT}px; overflow-y:auto;
+        flex:1 1 0; min-height:60px; overflow-y:auto;
         scrollbar-width:thin; scrollbar-color:#333 transparent;
     `;
 
@@ -325,11 +325,13 @@ function createSnippetsWidget(node) {
 
     const widget = node.addDOMWidget("snippets", "div", container);
     widget.computeSize = function (width) {
-        // search + list(capped) + add row + paddings; keeps a stable node body
-        return [width, 396];
+        // Classic renderer: fixed-height fallback (search + capped list + add row)
+        return [width, 402];
     };
-    // Vue nodes mode: keep this row content-sized (not growable)
-    widget.computeLayoutSize = undefined;
+    // Vue nodes mode: the row stays growable ('auto'), so enlarging the node
+    // gives the extra space to the snippet list; the container fills the row
+    // (height:100% + min-height) and the list flexes. Shrinking stops at the
+    // 396px min-height, beyond which the list scrolls internally.
 
     widget._rerender = render;
     node.snippetsWidget = widget;
