@@ -1,14 +1,13 @@
 # ComfyUI Prompt Manager Lite
 
-A minimal prompt library manager for ComfyUI — one node, nothing else.
+A minimal prompt library manager for ComfyUI — just two nodes, nothing else.
 
 ![Prompt Manager Lite node](docs/screenshot.png)
 
 Prompt Manager Lite is a stripped-down alternative to
 [ComfyUI-Prompt-Manager](https://github.com/FranckyB/ComfyUI-Prompt-Manager)
 for people who only use its core: a prompt library, a text editor, and a
-prompt output. No LoRA stacks, no trigger words, no recipe/workflow features,
-no extra nodes.
+prompt output. No LoRA stacks, no trigger words, no recipe/workflow features.
 
 ## Features
 
@@ -16,7 +15,7 @@ no extra nodes.
   the original plugin's UI glitches (stretched / collapsed widgets, misplaced
   DOM overlays). Resize-safe by design: the text area absorbs all extra space
   while the selector and button bar stay fixed.
-- **One node** (`Prompt Manager Lite`): category/prompt selector, multiline
+- **Prompt Manager Lite node**: category/prompt selector, multiline
   text editor, and a single `prompt` (STRING) output.
 - **Thumbnail browser** — the full prompt browser from the original plugin
   (grid view, NSFW filter, thumbnails, create/rename/delete categories,
@@ -25,6 +24,25 @@ no extra nodes.
   `New Prompt`, and a `More ▼` menu (delete prompt / export / import JSON).
 - **◀ ▶ navigation** — flip through every prompt across all categories.
 - **Unsaved-changes warning** (configurable in Settings → Prompt Manager Lite).
+
+## Prompt Snippets node
+
+A note-like companion node that holds a searchable list of short, reusable
+text fragments — quality tags, camera/lighting phrases, negative prompts,
+weight tricks.
+
+![Prompt Snippets node](docs/screenshot-snippets.png)
+
+- **Search** filters snippets by content and tag in real time; add new ones
+  with an optional tag at the bottom.
+- **Click a snippet** to copy it to the clipboard *and* send it to the node's
+  `prompts` (STRING) output, so it can be wired straight into any prompt
+  input. The output value is saved with the workflow.
+- Inline edit (✎) and delete (🗑) per snippet.
+- All snippet nodes share one library stored in a **dedicated file**
+  (`user/default/prompt_snippets.json`) — completely separate from the
+  prompt-manager library, so snippet data never mixes with thumbnail-capable
+  prompt records.
 
 ## Compatibility with the original Prompt Manager
 
@@ -61,8 +79,8 @@ git clone https://github.com/Martlet-Tech/comfyui-prompt-manager-lite \
     ComfyUI/custom_nodes/prompt-manager-lite
 ```
 
-Restart ComfyUI afterwards. The node appears in the node search as
-**Prompt Manager Lite**.
+Restart ComfyUI afterwards. The nodes appear in the node search as
+**Prompt Manager Lite** and **Prompt Snippets**.
 
 ## HTTP API
 
