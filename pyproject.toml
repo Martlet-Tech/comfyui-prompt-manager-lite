@@ -1,0 +1,14 @@
+[project]
+name = "comfyui-prompt-manager-lite"
+description = "Minimal prompt library manager: one node with a prompt selector, text editor and prompt output. Shares the prompt library file with ComfyUI-Prompt-Manager."
+version = "1.0.0"
+license = {text = "MIT"}
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Martlet-Tech/comfyui-prompt-manager-lite"
+
+[tool.comfy]
+PublisherId = "Martlet-Tech"
+DisplayName = "Prompt Manager Lite"
+Icon = ""
