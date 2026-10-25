@@ -12,6 +12,10 @@ no extra nodes.
 
 ## Features
 
+- **Works in both renderers** — including the new Vue nodes (2.0) mode, where
+  the original plugin's UI glitches (stretched / collapsed widgets, misplaced
+  DOM overlays). Resize-safe by design: the text area absorbs all extra space
+  while the selector and button bar stay fixed.
 - **One node** (`Prompt Manager Lite`): category/prompt selector, multiline
   text editor, and a single `prompt` (STRING) output.
 - **Thumbnail browser** — the full prompt browser from the original plugin
@@ -21,9 +25,6 @@ no extra nodes.
   `New Prompt`, and a `More ▼` menu (delete prompt / export / import JSON).
 - **◀ ▶ navigation** — flip through every prompt across all categories.
 - **Unsaved-changes warning** (configurable in Settings → Prompt Manager Lite).
-- **Resize-friendly** — the text area absorbs all extra space; the selector
-  and button bar stay fixed. Works in both the classic canvas and the new
-  Vue nodes (2.0) renderer.
 
 ## Compatibility with the original Prompt Manager
 
