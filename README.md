@@ -74,8 +74,8 @@ original plugin's endpoints even when both are loaded.
 
 The thumbnail browser is reused from
 [FranckyB/ComfyUI-Prompt-Manager](https://github.com/FranckyB/ComfyUI-Prompt-Manager)
-(MIT). Prompt Manager Lite is an independent, trimmed-down build — it is not
-affiliated with the original project.
+(MIT, © François Beaudry). Prompt Manager Lite is an independent,
+trimmed-down build — it is not affiliated with the original project.
 
 ## License
 
