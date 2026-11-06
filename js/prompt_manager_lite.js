@@ -29,6 +29,29 @@ const THEME = {
 
 const DEFAULT_THUMBNAIL = new URL("./placeholder.png", import.meta.url).href;
 
+/**
+ * Hide a native widget whose row our own DOM widget replaces.
+ *
+ * The classic trick (`type = "converted-widget"` + zero computeSize) no longer
+ * hides the row on ComfyUI 1.5x: canvas row visibility is derived from
+ * `hidden` / `options.hidden` / a type containing "hidden", so the combo kept
+ * being drawn at the same y as the text row and showed up half covered by the
+ * text area. `hidden = true` drops the row from both drawing and layout.
+ */
+function hideNativeWidget(widget) {
+    widget.hidden = true;
+    widget.type = "converted-widget";
+    widget.computeSize = () => [0, -4];
+}
+
+/** Re-apply the hide on nodes restored from a workflow (widgets may be rebuilt). */
+function hideNativeWidgets(node) {
+    for (const name of ["category", "name"]) {
+        const widget = node.widgets?.find(w => w.name === name);
+        if (widget) hideNativeWidget(widget);
+    }
+}
+
 // ========================
 // Small helpers
 // ========================
@@ -760,11 +783,8 @@ function createPromptSelectorWidget(node) {
     const promptWidget = node.widgets.find(w => w.name === "name");
     if (!categoryWidget || !promptWidget) return;
 
-    // Hide the original widgets visually but keep them functional
-    categoryWidget.type = "converted-widget";
-    categoryWidget.computeSize = () => [0, -4];
-    promptWidget.type = "converted-widget";
-    promptWidget.computeSize = () => [0, -4];
+    hideNativeWidget(categoryWidget);
+    hideNativeWidget(promptWidget);
 
     for (let i = node.inputs.length - 1; i >= 0; i--) {
         const inp = node.inputs[i];
@@ -1329,6 +1349,7 @@ app.registerExtension({
             if (!node.promptSelectorWidget) {
                 createPromptSelectorWidget(node);
             }
+            hideNativeWidgets(node);
             for (let i = node.inputs.length - 1; i >= 0; i--) {
                 const inp = node.inputs[i];
                 if (inp.name === "category" || inp.name === "name") {
